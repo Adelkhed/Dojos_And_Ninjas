@@ -1,5 +1,5 @@
 from flask_app.config.mysqlconnection import connectToMySQL,DB
-
+from flask_app.models import dojo 
 class Ninja:
     def __init__(self,data):
         self.id=data['id']
@@ -15,7 +15,7 @@ class Ninja:
         return connectToMySQL(DB).query_db(query,data)
     @classmethod
     def get_all(cls):
-        from flask_app.models.dojo import Dojo  # Importation à l'intérieur de la méthode pour éviter la boucle
+         
         query = "SELECT * FROM ninjas LEFT JOIN dojos ON ninjas.dojo_id = dojos.id;"
         results = connectToMySQL(DB).query_db(query)
         ninjas = []
@@ -24,9 +24,10 @@ class Ninja:
             dojo_data = {
                 'id': result['dojos.id'],
                 'name': result['name'],
-                'created_at': result['dojos.created_at'],
+                'created_at': result['dojos.created_at'],    
                 'updated_at': result['dojos.updated_at']
             }
-            ninja.dojo = Dojo(dojo_data)
+            ninja.dojo = dojo.Dojo(dojo_data)
             ninjas.append(ninja)
         return ninjas
+ 

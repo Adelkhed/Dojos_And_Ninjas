@@ -29,13 +29,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for ninja in dojo.ninjas %}
-                        <tr>
-                            <td>{{ ninja.first_name }}</td>
-                            <td>{{ ninja.last_name }}</td>
-                            <td>{{ ninja.age }}</td>
-                        </tr>
-                    {% endfor %}
+                    {% for row in dojo.ninjas %}
+                    <tr>
+                        <td>{{ row.first_name }}</td>
+                        <td>{{ row.last_name }}</td>
+                        <td>{{ row.age }}</td>
+                    </tr>
+                   {% endfor %}
                 </tbody>
             </table>
         </div>

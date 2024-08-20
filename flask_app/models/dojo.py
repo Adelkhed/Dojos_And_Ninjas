@@ -6,7 +6,7 @@ class Dojo:
         self.name=data['name']
         self.created_at=data['created_at']
         self.updated_at=data['updated_at']
-        
+        self.ninjas=None
     @classmethod
     def save(cls,data):
         query="INSERT INTO dojos (name) VALUES (%(name)s)"
@@ -22,21 +22,27 @@ class Dojo:
         return dojos
      
     @classmethod
-    def get_dojo_with_ninjas(cls, dojo_id):
-        query = "SELECT * FROM dojos LEFT JOIN ninjas ON dojos.id = ninjas.dojo_id WHERE dojos.id = %(dojo_id)s;"
-        data = {'dojo_id': dojo_id}
+    def get_dojo_with_ninjas(cls, data):
+        
+        query = "SELECT * FROM dojos LEFT JOIN ninjas ON dojos.id = ninjas.dojo_id WHERE ninjas.dojo_id = %(id)s;"
+        print(query)
         results = connectToMySQL(DB).query_db(query, data)
+        print(results)
+        if not results:
+           return None
 
         dojo = cls(results[0])
-        dojo.ninjas = []
+        dojo.ninjas = []  
+
         for result in results:
-            ninja_data = {
-                'id': result['ninjas.id'],
-                'first_name': result['first_name'],
-                'last_name': result['last_name'],
-                'age': result['age'],
-                'created_at': result['ninjas.created_at'],
-                'updated_at': result['ninjas.updated_at']
-            }
-            dojo.ninjas.append(Ninja(ninja_data))
+           ninja_data = {
+            'id': result['ninjas.id'],
+            'first_name': result['first_name'],
+            'last_name': result['last_name'],
+            'age': result['age'],
+            'created_at': result['ninjas.created_at'],
+            'updated_at': result['ninjas.updated_at']
+        }
+           dojo.ninjas.append(Ninja(ninja_data))
+    
         return dojo
