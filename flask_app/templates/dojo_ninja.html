@@ -26,6 +26,7 @@
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Age</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,6 +35,9 @@
                         <td>{{ row.first_name }}</td>
                         <td>{{ row.last_name }}</td>
                         <td>{{ row.age }}</td>
+                        <td><a href="/ninja/edit/{{row.id }}">Edit</a>
+                            <a href="/ninja/delete/{{row.id }}">Delete</a>
+                        </td>
                     </tr>
                    {% endfor %}
                 </tbody>

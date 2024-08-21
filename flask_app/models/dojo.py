@@ -25,7 +25,7 @@ class Dojo:
     def get_dojo_with_ninjas(cls, data):
         
         query = "SELECT * FROM dojos LEFT JOIN ninjas ON dojos.id = ninjas.dojo_id WHERE ninjas.dojo_id = %(id)s;"
-        print(query)
+        
         results = connectToMySQL(DB).query_db(query, data)
         print(results)
         if not results:
@@ -46,3 +46,4 @@ class Dojo:
            dojo.ninjas.append(Ninja(ninja_data))
     
         return dojo
+   

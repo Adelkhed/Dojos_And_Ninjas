@@ -8,7 +8,7 @@ class Ninja:
         self.age=data['age']
         self.created_at=data['created_at']
         self.updated_at=data['updated_at']
-        self.dojo=None
+        self.dojo_id=None
     @classmethod
     def save(cls,data):
         query="INSERT INTO ninjas (first_name,last_name,age,dojo_id) VALUES (%(first_name)s,%(last_name)s,%(age)s,%(dojo_id)s);"
@@ -30,4 +30,28 @@ class Ninja:
             ninja.dojo = dojo.Dojo(dojo_data)
             ninjas.append(ninja)
         return ninjas
- 
+    
+    @classmethod
+    def get_ninja(cls,data):
+        query = " SELECT * FROM ninjas WHERE id= %(id)s"
+        result = connectToMySQL(DB).query_db(query,data)
+        ninja=cls(result[0])
+        ninja.dojo_id = result[0]['dojo_id']
+        print("ninja")
+        print(ninja.dojo_id)
+        return ninja
+    
+        
+        
+
+   
+    @classmethod
+    def delete(cls,data):
+        query = "DELETE FROM ninjas Where id =%(id)s;"
+        result = connectToMySQL(DB).query_db(query,data)
+        return result
+    @classmethod
+    def update_ninja(cls,data):
+        query = "UPDATE ninjas SET first_name=%(first_name)s, last_name=%(last_name)s, age=%(age)s WHERE id=%(id)s;"
+        print(query)
+        return connectToMySQL(DB).query_db(query,data)
